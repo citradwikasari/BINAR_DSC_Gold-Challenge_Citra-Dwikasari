@@ -1,0 +1,13 @@
+tags:
+  - name: BINAR ACADEMY - NAMA - DSC 7
+get:
+  description: DISINI KASIH JUDUL APLIKASI SESUAI REPORT
+  # parameters:
+  #       - description: CEK MENYALA
+responses:
+    '200':
+      description: Successful response
+    '400':
+      description: Bad Request
+    '500':
+      description: Internal Server Error

@@ -8,7 +8,6 @@ import string
 app = Flask(__name__)
 
 
-
 #bikin template swagger
 from flask import request
 from flasgger import Swagger, LazyString, LazyJSONEncoder
