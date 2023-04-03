@@ -1,8 +1,0 @@
-NOTE:
-1. data challange nya jangan lupa dimasukin (abusive.csv, kamusalay.csv, data.csv)
-2. pastiin sebelum masuk ke code .py lakuin analisa dulu setiap fungsi code nya di file .ipynb. Kalau di .ipynb udah fix, baru pindahin ke file .py
-3. cara cleansing data nya dipelajari lagi ya.. masih ada yang miss. Bisa diikutin saran pada poin ke-3
-4. script challange_binar.ipynb dilengkapi dulu yah..referensi code bisa dipelajari dan di modifikasi dari referensi berikut:
-https://www.kaggle.com/code/ilhamfp31/preprocessing-the-indonesian-hate-abusive-text
-
-Banyakin latihan lagi di tahapan analisa datanya yah.. ga harus hapal setiap baris code, make sure setiap barisnya tau cara pembacaannya.
