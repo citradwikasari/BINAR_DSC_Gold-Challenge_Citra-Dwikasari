@@ -60,9 +60,6 @@ def remove_unnecessary_char(text):
 
 # rules 3 : mengganti kata-kata yang ada di kamus pertama
 def remove_abusive(text):
-    """review: disini pakai huruf kapital : dict1.ABUSVIE
-    karena di dalam data abusvie.csv, kolom nya pakai huruf kapital
-    """
     text = ' '.join(['' if word in dict1.ABUSIVE.values else word for word in text.split(' ')])
     text = re.sub('  +', ' ', text) # Remove extra spaces
     text = text.strip()
@@ -75,7 +72,7 @@ def normalize_alay(text):
     return ' '.join([alay_dict_map[word] if word in alay_dict_map else word for word in text.split(' ')])
 
 
-# rules 5: jadikan seluruh fungsi dalam 1 fungsi
+# jadikan seluruh fungsi dalam 1 fungsi
 def cleansing(text):
     text = lowercase(text) # rules 1
     text = remove_unnecessary_char(text) # rules 2
@@ -103,15 +100,34 @@ def hello_world():
 def text_processing():
 
     text = request.form.get('text')
+    def cleansing(text):
+        text = lowercase(text) # rules 1
+        text = remove_unnecessary_char(text) # rules 2
+        text = remove_abusive(text) # rules 3
+        text = normalize_alay(text) # rules 4
+        return text
+    json_response = {
+        'status_code': 200,
+        'description': "Teks yang sudah diproses",
+        # 'data': re.sub(r'[^a-zA-Z0-9]', ' ', text),
+        'data' : cleansing(text)
+    }
 
-    """Review: ini gausah di buat lagi, pakai aja yang rules 5 diatas"""
-    # def cleansing(text):
-    #     text = lowercase(text) # rules 1
-    #     text = remove_unnecessary_char(text) # rules 2
-    #     text = remove_abusive(text) # rules 3
-    #     text = normalize_alay(text) # rules 4
-    #     return text
+    response_data = jsonify(json_response)
+    return response_data
 
+# endpoint untuk membersihkan teks dari file CSV
+@swag_from("docs/text_processing.yml", methods=['POST'])
+@app.route('/cleansing', methods=['POST'])
+def text_processing():
+
+    text = request.form.get('text')
+    def cleansing(text):
+        text = lowercase(text) # rules 1
+        text = remove_unnecessary_char(text) # rules 2
+        text = remove_abusive(text) # rules 3
+        text = normalize_alay(text) # rules 4
+        return text
     json_response = {
         'status_code': 200,
         'description': "Teks yang sudah diproses",
@@ -134,22 +150,18 @@ def text_processing_file():
     df = pd.read_csv(file, encoding='latin-1')
 
     # Lakukan cleansing pada teks
-
     cleaned_text = []
     for text in df['Tweet']:
-
-        """Review: ini gausah di buat lagi, pakai aja yang rules 5 diatas"""
-        # def cleansing(text):
-        #     text = lowercase(text) # rules 1
-        #     text = remove_unnecessary_char(text) # rules 2
-        #     text = remove_abusive(text) # rules 3
-        #     text = normalize_alay(text) # rules 4
-        #     return text
+        def cleansing(text):
+            text = lowercase(text) # rules 1
+            text = remove_unnecessary_char(text) # rules 2
+            text = remove_abusive(text) # rules 3
+            text = normalize_alay(text) # rules 4
+            return text
         # cleaned_text.append(re.sub(r'[^a-zA-Z0-9]', ' ', text))
-
         cleaned_text.append(cleansing(text))
-    
     df['cleaned_text'] = cleaned_text
+
     json_response = {
             'status_code': 200,
             'description': "Teks yang sudah diproses",
